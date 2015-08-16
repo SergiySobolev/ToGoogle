@@ -53,12 +53,22 @@ public class Knapsack {
         if(a[s-1][n] == a[s][n]){
             buildDecision(s-1,n);
         } else {
-            decision.add(s);
-            buildDecision(s-1, n-weightCosts.get(s-1).getWeight());
+            decision.add(s-1);
+            buildDecision(s - 1, n - weightCosts.get(s - 1).getWeight());
         }
     }
 
     public void writeTableToFile(String tableFile) throws IOException {
         FileUtils.writeTableToFile(a, tableFile);
+    }
+
+    public void writeDecisionToFile(String s) throws IOException {
+        Integer cost = 0;
+        Integer weight = 0;
+        for(Integer i : decision){
+            cost += weightCosts.get(i).getCost();
+            weight += weightCosts.get(i).getWeight();
+        }
+        FileUtils.writeDecisionToFile(decision.toString(), cost.toString(), weight.toString(), s);
     }
 }

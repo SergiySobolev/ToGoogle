@@ -15,5 +15,6 @@ public class KnapsackTest {
         knapsack.buildKnapsackTable();
         knapsack.writeTableToFile("src\\main\\resources\\table.txt");
         knapsack.buildDecision();
+        knapsack.writeDecisionToFile("src\\main\\resources\\decision.txt");
     }
 }

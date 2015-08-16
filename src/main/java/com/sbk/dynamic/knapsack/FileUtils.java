@@ -18,6 +18,8 @@ import java.util.stream.Stream;
  */
 public  class FileUtils {
 
+    private static String enter = "\n";
+
     static Function<String, WeightCost> toWeightCostFunc = new Function<String, WeightCost>() {
         public WeightCost apply(String s) {
             String[] split = StringUtils.splitString(s," ");
@@ -47,10 +49,22 @@ public  class FileUtils {
         writer.close();
     }
 
+    public static void writeDecisionToFile(String decision, String cost, String weight, String fileName) throws IOException {
+        Path path = Paths.get(fileName);
+        BufferedWriter writer = Files.newBufferedWriter(path);
+        writer.write(decision);
+        writer.write(enter);
+        writer.write(String.format("Weight:%s", weight));
+        writer.write(enter);
+        writer.write(String.format("Cost:%s", cost));
+        writer.write(enter);
+        writer.close();
+    }
+
     private static String arrayToString(int[][] a){
         StringBuilder arrayToString = new StringBuilder();
         for(int[] ar : a){
-            arrayToString.append(Arrays.toString(ar)).append("\n");
+            arrayToString.append(Arrays.toString(ar)).append(enter);
         }
         return arrayToString.toString();
     }
