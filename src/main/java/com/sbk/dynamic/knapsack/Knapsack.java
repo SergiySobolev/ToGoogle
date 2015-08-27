@@ -1,5 +1,9 @@
 package com.sbk.dynamic.knapsack;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -17,6 +21,8 @@ public class Knapsack {
     private int[][] a;
     private List<Integer> decision = newArrayList();
 
+    final static Logger log = LoggerFactory.getLogger(Knapsack.class);
+
     public Knapsack(String weightCostsFile, String capacityFile) throws IOException {
         weightCosts = getWeightAndCosts(weightCostsFile);
         capacity = getCapacity(capacityFile);
@@ -29,14 +35,26 @@ public class Knapsack {
             a[0][i] = 0;
         }
         for(int i=1;i<=weightCostSize;i++){
+            log.info("------Knapsack with first {} items-------", i);
             int iWeight = weightCosts.get(i - 1).getWeight();
             int iCost =  weightCosts.get(i - 1).getCost();
             for(int j=0; j<=capacity; j++){
-                a[i][j] = a[i-1][j];
-                if(j>= iWeight){
-                    if(a[i-1][j-iWeight] + iCost > a[i][j]){
-                        a[i][j] = a[i-1][j-iWeight] + iCost;
+                int prevCost = a[i-1][j];
+                int capacityWithoutCurrentItem = j-iWeight;
+                boolean canContain = (capacityWithoutCurrentItem >= 0);
+                if(canContain){
+                    int prevCostWithoutCurrent = a[i-1][capacityWithoutCurrentItem];
+                    int currentCost = a[i - 1][capacityWithoutCurrentItem] + iCost;
+                    if(prevCostWithoutCurrent + iCost > prevCost){
+                        a[i][j] = currentCost;
+                        log.info("Item {}(Weight:{}, Cost:{}) putted to knapsack ({},{}). Previous cost({},{}):{}, current cost:{}", i-1, iWeight, iCost, i-1, j, i-1, capacityWithoutCurrentItem, prevCostWithoutCurrent, currentCost);
+                    } else {
+                        a[i][j] = prevCost;
+                        int prevCostWithSuchCapacity = a[i-1][j];
+                        log.info("Item {}(Weight:{}, Cost:{}) NOT putted to knapsack ({},{}). Previous cost with such capacity:{}, current cost:{}", i-1, iWeight, iCost, i-1, j, prevCostWithSuchCapacity, currentCost);
                     }
+                } else {
+                    a[i][j] = prevCost;
                 }
             }
         }
