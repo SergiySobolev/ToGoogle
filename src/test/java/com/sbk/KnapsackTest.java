@@ -5,9 +5,6 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-/**
- * Created by Jeronimo on 15.08.2015.
- */
 public class KnapsackTest {
     @Test
     public void testKnapsack() throws IOException {
