@@ -1,19 +1,23 @@
 package com.sbk.stringdistance;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static com.sbk.util.MathUtils.max;
 
-public class NW {
+public class NeedlemanWunsch {
     public static final int GAPSCORE = -2;
     public static final int MATHSCORE = 2;
     public static final int MISMATCHSCORE = -1;
     private static char DASH = '-';
+    private Set<Trace> decision = new HashSet();
 
     private int[][] a;
     char[] c1, c2;
     int cols;
     int rows;
 
-    public NW(String s1, String s2) {
+    public NeedlemanWunsch(String s1, String s2) {
         this.cols = s1.length() + 1;
         this.rows = s2.length() + 1;
         a = new int[rows][cols];
@@ -35,30 +39,41 @@ public class NW {
         }
     }
 
-    private String[] findTrace(){
-        int m = cols-1;
-        int n = rows-1;
-        StringBuilder trace1=new StringBuilder();
-        StringBuilder trace2=new StringBuilder();
-        while(m > 0 && n > 0){
-            int scroeDiag = (c1[m - 1] == c2[n - 1]) ? MATHSCORE : MISMATCHSCORE;
-            if (m > 0 && n > 0 && a[n][m] == a[n-1][m-1] + scroeDiag)
-            {
-                trace1.append(c2[n-1]);
-                trace2.append(c1[m-1]);
-                --m;
-                --n;
-            } else if (n > 0 && a[n][m] == a[n-1][m] + GAPSCORE) {
-                trace1.append(c2[n-1]);
-                trace2.append(DASH);
-                --n;
-            } else if (n > 0 && a[n][m] == a[n][m - 1] + GAPSCORE) {
-                trace1.append(DASH);
-                trace2.append(c1[m-1]);
-                --m;
-            }
+    public void findTrace(){
+        findTrace(cols-1, rows-1, new Trace());
+    }
+
+    private void findTrace(int k, int l, Trace suffix){
+        int m = k;
+        int n = l;
+        if(m == 0 && n == 0){
+            this.decision.add(suffix);
+            return;
         }
-        return new String[]{trace2.reverse().toString(), trace1.reverse().toString()};
+        int scroeDiag = (c1[m - 1] == c2[n - 1]) ? MATHSCORE : MISMATCHSCORE;
+        if (m > 0 && n > 0 && a[n][m] == a[n-1][m-1] + scroeDiag)
+        {
+            Trace newSuffix = suffix.clone();
+            newSuffix.append(c2[n-1], c1[m-1]);
+            findTrace(m-1,n-1, newSuffix);
+        }
+        if (n > 0 && a[n][m] == a[n-1][m] + GAPSCORE) {
+            Trace newSuffix = suffix.clone();
+            newSuffix.append(c2[n-1], DASH);
+            findTrace(m,n-1, newSuffix);
+        }
+        if (m > 0 && a[n][m] == a[n][m - 1] + GAPSCORE) {
+            Trace newSuffix = suffix.clone();
+            newSuffix.append(DASH, c1[m-1]);
+            findTrace(m-1,n, newSuffix);
+        }
+
+    }
+
+    public void printAligents(){
+        for(Trace trace : decision){
+            System.out.println(trace.toString());
+        }
     }
 
     private void print4(int i) {
@@ -78,10 +93,15 @@ public class NW {
         }
     }
 
-    public String[] findAligments(){
+    public Set<Trace> getDecision(){
+        return decision;
+    }
+
+    public void findAligments(){
         initializeScoreTable();
         printScoreTable();
-        return findTrace();
+        findTrace();
+        printAligents();
     }
 }
 
