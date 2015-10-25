@@ -40,6 +40,10 @@ public class Trace implements Cloneable{
         return sb2.toString();
     }
 
+    public long getDistance(){
+        return distance;
+    }
+
     public Trace clone(){
         return  new Trace(this.sb1, this.sb2);
     }
