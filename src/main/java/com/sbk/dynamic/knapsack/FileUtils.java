@@ -1,7 +1,5 @@
 package com.sbk.dynamic.knapsack;
 
-import com.sun.deploy.util.StringUtils;
-
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,7 +20,7 @@ public  class FileUtils {
 
     static Function<String, WeightCost> toWeightCostFunc = new Function<String, WeightCost>() {
         public WeightCost apply(String s) {
-            String[] split = StringUtils.splitString(s," ");
+            String[] split = s.split("\\s+");
             String weight = split[0];
             String cost = split[1];
             return new WeightCost(weight, cost);
