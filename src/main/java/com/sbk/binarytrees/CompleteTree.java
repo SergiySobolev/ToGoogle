@@ -1,6 +1,8 @@
 package com.sbk.binarytrees;
 
 
+import com.google.common.base.Preconditions;
+
 import static java.lang.String.format;
 
 public class CompleteTree {
@@ -14,25 +16,35 @@ public class CompleteTree {
         size = 0;
     }
 
-    public void insert(Node root, Node newNode) {
-        int parent = (newNode.value - 1) / 2;
-        if(parent == root.value){
-            newNode.parent = root;
-            if(root.left == null) {
-                root.left = newNode;
-            } else {
-                root.right = newNode;
-            }
+    public void insert(int... newElements) {
+        for(int newElement: newElements) {
+            insert(newElement);
+        }
+    }
+
+    public void insert(int newElement) {
+        insert(new Node(newElement));
+    }
+
+    public void insert(Node newNode) {
+        if(size == 0){
+            root = newNode;
+            newNode.num = ++size;
             return;
         }
-        Node childToInsert = parent % 2 == 1 ? root.left : root.right;
-        insert(childToInsert, newNode);
+        newNode.num = ++size;
+        Node parentNode = find(size / 2);
+        if(isEven(newNode.num)) {
+            parentNode.setLeft(newNode);
+        } else {
+            parentNode.setRight(newNode);
+        }
     }
 
     public Node find(int num) {
-        assert num > 0;
-        assert size > 0;
-        assert num <= size;
+        Preconditions.checkArgument(num >= 0, "You must search for element with positive number");
+        Preconditions.checkArgument(size > 0, "Tree is empty");
+        Preconditions.checkArgument(num <= size, "You try to find element with number more than size of tree");
         Node cur = root;
         String binary = toBinary(num);
         for(int i=1; i<binary.length();i++){
@@ -62,8 +74,13 @@ public class CompleteTree {
         return res.reverse().toString();
     }
 
+    public static boolean isEven(int n) {
+        return n % 2 == 0;
+    }
+
     class Node {
 
+        int num;
         int value;
         Node left;
         Node right;

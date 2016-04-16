@@ -18,6 +18,7 @@ public class CompleteTreeTest {
     @Test
     public void testFind() throws Exception {
         CompleteTree tree = new CompleteTree();
+        tree.insert(1,2,3,4,5,6,7);
         for(int i=1;i<=7;i++){
             assertThat(tree.find(i).value, equalTo(i));
         }
