@@ -2,10 +2,17 @@ package com.sbk.binarytrees;
 
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.lang.String.format;
+import static java.util.stream.Stream.concat;
 
-public class CompleteTree {
+public class CompleteTree<E> {
 
     int size;
 
@@ -16,13 +23,13 @@ public class CompleteTree {
         size = 0;
     }
 
-    public void insert(int... newElements) {
-        for(int newElement: newElements) {
+    public void insert(E... newElements) {
+        for(E newElement: newElements) {
             insert(newElement);
         }
     }
 
-    public void insert(int newElement) {
+    public void insert(E newElement) {
         insert(new Node(newElement));
     }
 
@@ -53,17 +60,37 @@ public class CompleteTree {
         return cur;
     }
 
-    public void preOrderTraversal() {
-        preOrderTraversal(root);
+    public List<E> preOrderTraversal() {
+        return preOrderTraversal(root);
     }
 
-    public void preOrderTraversal(Node node) {
-        if(node != null) {
-            System.out.print(format("%s, ", node.value));
-            preOrderTraversal(node.left);
-            preOrderTraversal(node.right);
-        }
+    public List<E> preOrderTraversal(Node node) {
+        List<E> leftPreOrderTraversal = node.left == null
+                ? Lists.newArrayList() : preOrderTraversal(node.left);
+        List<E> rightPreOrderTraversal = node.right == null
+                ? Lists.newArrayList() : preOrderTraversal(node.right);
+        return concat( Stream.of(node.value), leftPreOrderTraversal.stream(), rightPreOrderTraversal.stream())
+                .collect(Collectors.<E>toList());
     }
+
+    public List<E> inOrderTraversal() {
+        return inOrderTraversal(root);
+    }
+
+    public List<E> inOrderTraversal(Node node) {
+        List<E> leftInOrderTraversal = node.left == null
+                ? Lists.newArrayList() : inOrderTraversal(node.left);
+        List<E> rightInOrderTraversal = node.right == null
+                ? Lists.newArrayList() : inOrderTraversal(node.right);
+        return concat(leftInOrderTraversal.stream(), Stream.of(node.value), rightInOrderTraversal.stream())
+                .collect(Collectors.<E>toList());
+    }
+
+    private static<E> Stream<E> concat(Stream<E> s1, Stream<E> s2, Stream<E> s3) {
+        return Stream.concat(Stream.concat(s1, s2), s3);
+    }
+
+
 
     public static String toBinary(int val) {
         StringBuilder res = new StringBuilder();
@@ -81,19 +108,19 @@ public class CompleteTree {
     class Node {
 
         int num;
-        int value;
+        E value;
         Node left;
         Node right;
         Node parent;
 
-        public Node (int value) {
+        public Node (E value) {
             this.value = value;
             left = null;
             right = null;
             parent = null;
         }
 
-        public Node (int value, Node parent) {
+        public Node (E value, Node parent) {
             this.value = value;
             left = null;
             right = null;

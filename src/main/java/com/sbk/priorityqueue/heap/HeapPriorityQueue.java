@@ -1,18 +1,12 @@
 package com.sbk.priorityqueue.heap;
 
+import com.sbk.binarytrees.CompleteTree;
 import com.sbk.priorityqueue.PriorityQueue;
 import com.sbk.priorityqueue.key.HasKey;
 
 public class HeapPriorityQueue<E extends HasKey> implements PriorityQueue<E> {
 
-    private Long size;
-
-    private HeapElement element = new HeapElement();
-
-    public HeapPriorityQueue(HasKey value) {
-        this.element.data = value;
-        this.size = 0L;
-    }
+    private CompleteTree tree = new CompleteTree();
 
     @Override
     public boolean isEmpty() {
