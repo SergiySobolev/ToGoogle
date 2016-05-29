@@ -1,5 +1,7 @@
-package com.sbk.com.sbk.leetcode;
+package com.sbk.leetcode;
 
+import com.sbk.leetcode.dynamic.DynamicProgrammingSolution;
+import com.sbk.leetcode.dynamic.NumArray;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -1,5 +1,7 @@
-package com.sbk.com.sbk.leetcode;
+package com.sbk.leetcode;
 
+import com.sbk.leetcode.dynamic.LinkedListSolutions;
+import com.sbk.leetcode.dynamic.ListNode;
 import org.junit.Before;
 import org.junit.Test;
 

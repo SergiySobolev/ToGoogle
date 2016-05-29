@@ -1,5 +1,6 @@
-package com.sbk.com.sbk.leetcode;
+package com.sbk.leetcode;
 
+import com.sbk.leetcode.dynamic.StringSolution;
 import org.junit.Before;
 import org.junit.Test;
 

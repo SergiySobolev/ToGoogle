@@ -1,4 +1,4 @@
-package com.sbk.com.sbk.leetcode;
+package com.sbk.leetcode.dynamic;
 
 import java.util.Arrays;
 import java.util.LinkedList;

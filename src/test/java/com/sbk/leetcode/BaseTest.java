@@ -1,4 +1,4 @@
-package com.sbk.com.sbk.leetcode;
+package com.sbk.leetcode;
 
 import org.junit.AssumptionViolatedException;
 import org.junit.Rule;
