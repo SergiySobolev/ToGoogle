@@ -1,7 +1,6 @@
 package com.sbk.leetcode;
 
 import com.sbk.leetcode.dynamic.DynamicProgrammingSolution;
-import com.sbk.leetcode.dynamic.NumArray;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,13 +13,13 @@ import static org.junit.Assert.*;
 public class DynamicProgrammingSolutionTest extends BaseTest {
 
     DynamicProgrammingSolution sol;
-    NumArray solNumArray;
+   // NumArray solNumArray;
 
     @Before
     public void setUp() throws Exception {
         sol = new DynamicProgrammingSolution();
         int[] nums = new int[]{1,2,3};
-        solNumArray = new NumArray(nums);
+       // solNumArray = new NumArray(nums);
     }
 
     @Test
@@ -30,7 +29,7 @@ public class DynamicProgrammingSolutionTest extends BaseTest {
 
     @Test
     public void testSumRange() {
-        assertThat(solNumArray.sumRange(0,2), equalTo(6));
-        assertThat(solNumArray.sumRange(1,2), equalTo(5));
+       // assertThat(solNumArray.sumRange(0,2), equalTo(6));
+      //  assertThat(solNumArray.sumRange(1,2), equalTo(5));
     }
 }
