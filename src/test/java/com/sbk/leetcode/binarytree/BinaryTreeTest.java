@@ -18,17 +18,9 @@ public class BinaryTreeTest {
         List<String> binaryTreePaths =  b.binaryTreePaths(root);
         String[] expected = {"1->2->5", "1->3"};
         assertThat(binaryTreePaths, containsInAnyOrder(expected));
-
+        binaryTreePaths =  b.binaryTreePaths(null);
+        expected = new String[]{};
+        assertThat(binaryTreePaths, containsInAnyOrder(expected));
     }
-
-    @Test
-    public void appendPathsToNodeTest() {
-        BinaryTreePath b = new BinaryTreePath();
-        List<String> appendedPaths = b.appendPathsToNode(new TreeNode(1,null, null),
-                asList("2", "3->4", "5->6"));
-        String[] expected = {"1->2", "1->3->4", "1->5->6"};
-        assertThat(appendedPaths, containsInAnyOrder(expected));
-    }
-
 
 }
