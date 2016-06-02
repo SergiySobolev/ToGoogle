@@ -1,9 +1,5 @@
 package com.sbk.leetcode.binarytree;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
-
 class TreeNode {
     int val;
     TreeNode left;
