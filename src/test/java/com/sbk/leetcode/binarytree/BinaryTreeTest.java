@@ -35,4 +35,23 @@ public class BinaryTreeTest {
         assertThat(answer.val, equalTo(root.val));
     }
 
+    @Test
+    public void lowestCommonAncestorTest2() {
+        TreeNode root = TreeUtil.toTreeNode(new Integer[]{5,3,6,2,4,null,null,1});
+        LowestCommonAncestor l = new LowestCommonAncestor();
+        TreeNode answer = l.lowestCommonAncestor(root,root.left.left.left,root.left.right);
+        assertThat(answer.val, equalTo(3));
+        root = TreeUtil.toTreeNode(new Integer[]{2,1});
+        answer = l.lowestCommonAncestor(root, root, root.left);
+        assertThat(answer.val, equalTo(2));
+    }
+
+    @Test
+    public void lowestCommonAncestorTest3() {
+        TreeNode root = TreeUtil.toTreeNode(new Integer[]{6,2,8,0,4,7,9,null,null,3,5});
+        LowestCommonAncestor l = new LowestCommonAncestor();
+        TreeNode answer = l.lowestCommonAncestor(root, new TreeNode(3), new TreeNode(5));
+        assertThat(answer.val, equalTo(4));
+    }
+
 }
