@@ -1,10 +1,12 @@
-package com.sbk.leetcode.binarytree;
+package com.sbk.leetcode.binarytree.tasks;
+
+import com.sbk.leetcode.binarytree.TreeNode;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-class BinaryTreePath {
+public class BinaryTreePath {
 
     public List<String> binaryTreePaths(TreeNode root) {
         ArrayList<String> completedPaths = new ArrayList<>();

@@ -1,5 +1,7 @@
 package com.sbk.leetcode.binarytree;
 
+import com.sbk.leetcode.binarytree.tasks.BinaryTreePath;
+import com.sbk.leetcode.binarytree.tasks.LowestCommonAncestor;
 import org.junit.Test;
 
 import java.util.List;
