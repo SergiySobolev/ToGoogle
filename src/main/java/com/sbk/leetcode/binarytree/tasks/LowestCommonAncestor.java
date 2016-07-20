@@ -5,16 +5,12 @@ import com.sbk.leetcode.binarytree.TreeNode;
 public class LowestCommonAncestor {
 
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        while (root != null) {
-            boolean moreThanPAndQ = p.val < root.val && root.val > q.val;
-            boolean lessThanPAndQ = p.val > root.val && root.val < q.val;
-            if (moreThanPAndQ) {
-                root = root.left;
-            } else if (lessThanPAndQ) {
-                root = root.right;
-            } else return root;
-        }
-        return null;
+        if (root == p || root == q || root == null) { return root; }
+        TreeNode left = lowestCommonAncestor(root.left, p, q);
+        TreeNode right = lowestCommonAncestor(root.right, p, q);
+        return (left != null && right != null)
+                ? root
+                : (left != null ? left : right);
     }
 
 }
