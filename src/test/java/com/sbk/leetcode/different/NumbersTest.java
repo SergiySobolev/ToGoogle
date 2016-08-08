@@ -1,4 +1,4 @@
-package com.sbk.leetcode;
+package com.sbk.leetcode.different;
 
 import com.sbk.leetcode.dynamic.Numbers;
 import org.junit.Before;
