@@ -1,10 +1,10 @@
 package com.sbk.heap;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static java.lang.Math.min;
 
 /**
  * @see <a href="https://leetcode.com/problems/find-k-pairs-with-smallest-sums/">Find K Pairs with Smallest Sums</a>
@@ -12,18 +12,22 @@ import java.util.stream.Stream;
 public class KSmallestPairs {
 
     public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
-        Pair[] pairs = new Pair[nums1.length*nums2.length];
-        for(int i=0; i<nums1.length; i++){
-            for(int j=0; j<nums2.length;j++){
-                int curnum = i*nums2.length + j;
-                pairs[curnum] = new Pair(i, j, nums1[i] + nums2[j]);
+        if(nums1.length==0 || nums2.length == 0)  return new ArrayList<>();
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        for(int i=0;i<nums2.length;i++) {
+            pq.offer(new Pair(0,i, nums1[0] + nums2[i]));
+        }
+        List<int[]> pairs = new ArrayList<>();
+        for(int i = 0; i < Math.min(k, nums1.length*nums2.length); i++){
+            Pair p = pq.poll();
+            pairs.add(new int[]{nums1[p.i1], nums2[p.i2]});
+            if(p.i1+1 < nums1.length) {
+                pq.offer(new Pair(p.i1+1,
+                        p.i2,
+                        nums1[p.i1+1] + nums2[p.i2]));
             }
         }
-        Arrays.sort(pairs);
-        return Stream.of(pairs)
-                .limit(Math.min(k, pairs.length))
-                .map(pair -> new int[]{nums1[pair.i1], nums2[pair.i2]})
-                .collect(Collectors.toList());
+        return pairs;
     }
 
     static class Pair implements Comparable<Pair>{
